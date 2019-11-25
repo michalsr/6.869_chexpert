@@ -1,0 +1,21 @@
+class DefaultConfig(object):
+	model = 'densenet'
+	load_model_path = False
+	data_root = '..'
+	train_data_list = './data/trainSet.csv'
+	valid_data_list = './data/validSet.csv'
+	test_data_list = './data/testSet.csv'
+	classes= ['No Finding', 'Enlarged Cardiomediastinum', 'Cardiomegaly',
+		'Lung Opacity', 'Lung Lesion', 'Edema', 'Consolidation', 
+		'Pneumonia', 'Atelectasis', 'Pneumothorax','Pleural Effusion',
+		'Pleural Other', 'Fracture', 'Support Devices']
+	batch_size =16
+	check_freq = 2000
+	result_file = 'result.csv'
+	max_epoch = 3
+	lr = .0001
+	betas = (.9,.999)
+	eps= 1e-08
+	lr_decay = .95
+	weight_decay = 1e-5
+opt =  DefaultConfig()
