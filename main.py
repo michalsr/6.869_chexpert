@@ -49,10 +49,11 @@ def train(**kwargs):
 		time_end=time.strftime('%m%d_%H%M%S')
 		if loss_mean_min > loss_mean:
 			loss_mean_min = loss_mean
-			torch.save({'epoch':epoch+1,
-				    'state_dict':model.state_dict(),
-				    'optimizer': optimizer.state_dict()},
-				    '/checkpoints/m_' + '.pth.tar')
+			save_dir = 'baseline'
+			if not os.exists(save_dir):
+				os.mkdir(save_dir)
+			PATH=save_dir+"/weights"+str(epoch_number)
+			torch.save(model.state_dict(), PATH)
 			print('Epoch [' + str(epoch+1) + '] [save] [m_' + 
 				time_end + '] loss = ' +str(loss_mean))
 		else:
@@ -63,7 +64,7 @@ def val(model,dataloader, criterion, total_batch):
 	counter = 0
 	loss_sum = 0
 	with torch.no_grad():
-		bar = tqdm(enumerate(datalaoder),total=total_batch)
+		bar = tqdm(enumerate(dataloader),total=total_batch)
 		for i , (data,label) in bar:
 			inp=data.clone().detach()
 			target=label.clone().detach()
@@ -82,11 +83,9 @@ def generate_model():
 	model = densenet121(len(opt.classes))
 	model.cuda()
 	if opt.load_model_path:
-		load_model_path = os.path.join('./checkpoints',	
-			opt.load_model_path)
+		load_model_path ='baseline'
 		print('Loading checkpoint ....')
-		checkpoint = torch.load(load_model_path)
-		model.load_state_dict(checkpoint['state_dict'])
+		model.load_state_dict(torch.load(load_model_path))
 		print('Done')
 	return model
 
