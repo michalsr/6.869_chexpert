@@ -1,14 +1,11 @@
 class DefaultConfig(object):
 	model = 'densenet'
-	load_model_path = False
+	load_model_path =  'baseline/weights2'
 	data_root = '..'
 	train_data_list = './data/trainSet.csv'
 	valid_data_list = './data/validSet.csv'
 	test_data_list = './data/testSet.csv'
-	classes= ['No Finding', 'Enlarged Cardiomediastinum', 'Cardiomegaly',
-		'Lung Opacity', 'Lung Lesion', 'Edema', 'Consolidation', 
-		'Pneumonia', 'Atelectasis', 'Pneumothorax','Pleural Effusion',
-		'Pleural Other', 'Fracture', 'Support Devices']
+	classes= ['No Finding','Cardiomegaly','Atelectasis','Pleural Effusion','Consolidation','Edema']
 	batch_size =16
 	check_freq = 2000
 	result_file = 'result.csv'
