@@ -31,8 +31,10 @@ class ChestDataSet(Dataset):
 			if mode == 'train':
 				transform = transforms.Compose([
 					transforms.Resize(256),
-					transforms.CenterCrop(224),
-					# transforms.RandomHorizontalFlip(),
+					transforms.RandomCrop(224, padding=None, pad_if_needed=False, fill=0, padding_mode='constant'),
+					transforms.RandomAffine(0, translate=(0.05, 0.05), scale=None, shear=None, resample=False, fillcolor=0),
+					transforms.RandomHorizontalFlip(p=0.5),
+					transforms.RandomRotation(180, resample=False, expand=False, center=None, fill=0),
 					transforms.ToTensor(),
 					normalize,
 				])
