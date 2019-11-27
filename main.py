@@ -55,6 +55,7 @@ def train(**kwargs):
 	optimizer = torch.optim.Adam(model.parameters(), betas=opt.betas,
 			lr=opt.lr, eps=opt.eps)
 	loss_mean_min = 1e100
+
 	print('\n-------------------')
 	print('-Start training....')
 	print('-----------------\n')
