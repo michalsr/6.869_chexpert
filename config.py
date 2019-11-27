@@ -9,7 +9,7 @@ class DefaultConfig(object):
 	batch_size = 64
 	check_freq = 2000
 	result_file = 'result.csv'
-	max_epoch = 10
+	max_epoch = 3
 	lr = .0001
 	betas = (.9,.999)
 	eps= 1e-08
