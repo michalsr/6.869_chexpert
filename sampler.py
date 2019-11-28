@@ -37,7 +37,8 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         self.weights = torch.DoubleTensor(weights)
 
     def _get_label(self, dataset, idx):
-        return dataset.__getitem__(idx)
+        img, label = dataset.__getitem__(idx)
+        return label
                 
     def __iter__(self):
         return (self.indices[i] for i in torch.multinomial(
