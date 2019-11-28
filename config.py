@@ -1,6 +1,6 @@
 class DefaultConfig(object):
 	model = 'densenet'
-	load_model_path =  'baseline/weights2'
+	load_model_path =  ''
 	data_root = '..'
 	train_data_list = './data/trainSet.csv'
 	valid_data_list = './data/validSet.csv'
@@ -9,7 +9,7 @@ class DefaultConfig(object):
 	batch_size =16
 	check_freq = 2000
 	result_file = 'result.csv'
-	max_epoch = 3
+	max_epoch = 5
 	lr = .0001
 	betas = (.9,.999)
 	eps= 1e-08

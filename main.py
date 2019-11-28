@@ -81,7 +81,7 @@ def train(**kwargs):
 		time_end=time.strftime('%m%d_%H%M%S')
 		if loss_mean_min > loss_mean:
 			loss_mean_min = loss_mean
-			save_dir = 'baseline'
+			save_dir = 'upsampling'
 			if not os.path.exists(save_dir):
 				os.mkdir(save_dir)
 			PATH=save_dir+"/weights"+str(epoch)
