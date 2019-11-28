@@ -1,7 +1,7 @@
 import torch
 import torch.utils.data
 import torchvision
-
+from data.dataset import ChestDataSet
 
 class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
     """Samples elements randomly from a given list of indices for imbalanced dataset
@@ -37,13 +37,7 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         self.weights = torch.DoubleTensor(weights)
 
     def _get_label(self, dataset, idx):
-        dataset_type = type(dataset)
-        if dataset_type is torchvision.datasets.MNIST:
-            return dataset.train_labels[idx].item()
-        elif dataset_type is torchvision.datasets.ImageFolder:
-            return dataset.imgs[idx][1]
-        else:
-            raise NotImplementedError
+        return dataset.__getitem__(idx)
                 
     def __iter__(self):
         return (self.indices[i] for i in torch.multinomial(
