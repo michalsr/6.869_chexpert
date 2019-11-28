@@ -14,6 +14,8 @@ from models.densenet import densenet121
 from config import opt
 from data import preprocess
 from sklearn.metrics import roc_auc_score
+from sampler import ImbalancedDatasetSampler
+
 def test(**kwargs):
 	model =generate_model()
 	test_data = ChestDataSet(opt.data_root, opt.test_data_list,mode='train')
@@ -46,7 +48,7 @@ def test(**kwargs):
 def train(**kwargs):
 	model = generate_model()
 	train_data = ChestDataSet(opt.data_root, opt.train_data_list, mode='train')
-	train_dataloader = DataLoader(train_data, opt.batch_size, shuffle=True)
+	train_dataloader = DataLoader(train_data, opt.batch_size, sampler=ImbalancedDatasetSampler(train_data), shuffle=True)
 	val_data = ChestDataSet(opt.data_root, opt.valid_data_list,
 			mode = 'train')
 	val_dataloader = DataLoader(val_data, opt.batch_size,
