@@ -7,7 +7,11 @@ def densenet121(num_classes, pretrained=False, **kwargs):
 	model.classifier = nn.Sequential(
 		nn.Linear(num_features, num_features),
 		nn.Dropout(p=.9),
-		nn.Linear(num_features, 6),
+<<<<<<< HEAD
+		nn.Linear(num_features, num_classes),
+=======
+		nn.Linear(num_features, num_classes),
+>>>>>>> 40e0ac572f80275c0df5da750f16a5cf79d37da8
 		nn.Sigmoid()
 	)
 	return model
