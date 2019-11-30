@@ -48,7 +48,7 @@ def test(**kwargs):
 def train(**kwargs):
 	model = generate_model()
 	train_data = ChestDataSet(opt.data_root, opt.train_data_list, mode='train')
-	train_dataloader = DataLoader(train_data, opt.batch_size, sampler=ImbalancedDatasetSampler(train_data), shuffle=True)
+	train_dataloader = DataLoader(train_data, opt.batch_size, sampler=ImbalancedDatasetSampler(train_data), shuffle=False)
 	val_data = ChestDataSet(opt.data_root, opt.valid_data_list,
 			mode = 'train')
 	val_dataloader = DataLoader(val_data, opt.batch_size,
