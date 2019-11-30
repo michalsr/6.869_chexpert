@@ -28,8 +28,10 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         label_to_count = np.zeros(len(opt.classes))
         for idx in self.indices:
             label = self._get_label(dataset, idx)
-            for clss, i in label, list(range(len(label))):
+            i = 0
+            for clss in label:
                 label_to_count[i] += clss
+                i += 1
                 
         # weight for each sample
         weights = np.zeros(len(dataset))
@@ -37,10 +39,12 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         for idx in self.indices:
             c = 0
             label = self._get_label(dataset, idx)
-            for clss, i in label, list(range(len(label))):
+            i = 0
+            for clss in label:
                 if clss:
                     weights[idx] += (1/label_to_count[i])
                     c += 1
+                i += 1
             weights[idx] /= c 
 
         # weights = [1.0 / label_to_count[self._get_label(dataset, idx)]
