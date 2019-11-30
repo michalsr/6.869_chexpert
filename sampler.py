@@ -2,6 +2,8 @@ import torch
 import torch.utils.data
 import torchvision
 from data.dataset import ChestDataSet
+import numpy as np
+from config import opt
 
 class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
     """Samples elements randomly from a given list of indices for imbalanced dataset
@@ -23,17 +25,26 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
             if num_samples is None else num_samples
             
         # distribution of classes in the dataset 
-        label_to_count = {}
+        label_to_count = np.zeros(len(opt.classes))
         for idx in self.indices:
             label = self._get_label(dataset, idx)
-            if label in label_to_count:
-                label_to_count[label] += 1
-            else:
-                label_to_count[label] = 1
+            for clss, i in label, list(range(len(label))):
+                label_to_count[i] += clss
                 
         # weight for each sample
-        weights = [1.0 / label_to_count[self._get_label(dataset, idx)]
-                   for idx in self.indices]
+        weights = np.zeros(len(dataset))
+
+        for idx in self.indices:
+            c = 0
+            label = self._get_label(dataset, idx)
+            for clss, i in label, list(range(len(label))):
+                if clss:
+                    weights[idx] += (1/label_to_count[i])
+                    c += 1
+            weights[idx] /= c 
+
+        # weights = [1.0 / label_to_count[self._get_label(dataset, idx)]
+        #            for idx in self.indices]
         self.weights = torch.DoubleTensor(weights)
 
     def _get_label(self, dataset, idx):
