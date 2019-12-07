@@ -73,7 +73,7 @@ def train(**kwargs):
 
 			varInput = data.clone().detach().requires_grad_(True).cuda()
 			varTarget1 = data.cuda()
-			varTarget2 = label.clone().detach().requires_grad_(True).cuda()
+			varTarget2 = label.clone().detach().cuda()
 
 			# varInput dim: bsx1x896x896
 			varOutput1, varOutput2 = model(varInput)
@@ -131,7 +131,7 @@ def val(model,dataloader, total_batch):
 
 			varInput = data.clone().detach().requires_grad_(True).cuda()
 			varTarget1 = data.cuda()
-			varTarget2 = label.clone().detach().requires_grad_(True).cuda()
+			varTarget2 = label.clone().detach().cuda()
 
 			# varInput dim: bsx1x896x896
 			varOutput1, varOutput2 = model(varInput)
