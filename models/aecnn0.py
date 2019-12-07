@@ -43,7 +43,7 @@ class AECNN0(nn.Module):
         z1 = Relu1.apply(z1)
         
         bs, c, h, w = y.shape
-        y2 = torch.Tensor(bs, c, h, w).cuda()
+        y2 = torch.Tensor(bs, 1, h, w).cuda()
         
         for img_no in range(bs):
             y2[img_no] = y[img_no]

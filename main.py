@@ -70,6 +70,7 @@ def train(**kwargs):
 			inp = data.clone().detach().requires_grad_(True)
 			target = label.clone().detach()
 			inp = inp.cuda()
+			print("INPPPPP", inp.shape)
 			target = target.cuda()
 			optimizer.zero_grad()
 			output = model(inp)
