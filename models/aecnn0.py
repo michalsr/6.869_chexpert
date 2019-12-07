@@ -2,6 +2,7 @@ import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 from .densenet import densenet121
+from torch.autograd import Function
 
 class AECNN0(nn.Module):
 
