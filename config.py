@@ -5,7 +5,7 @@ class DefaultConfig(object):
 	train_data_list = './data/trainSet.csv'
 	valid_data_list = './data/validSet.csv'
 	test_data_list = './data/testSet.csv'
-	classes= ['No Finding','Cardiomegaly','Atelectasis','Pleural Effusion','Consolidation','Edema']
+	classes= ['Cardiomegaly','Atelectasis','Pleural Effusion','Consolidation','Edema']
 	batch_size =16
 	check_freq = 2000
 	result_file = 'result.csv'
