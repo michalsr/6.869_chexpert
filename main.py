@@ -75,6 +75,7 @@ def train(**kwargs):
 			target = target.cuda()
 			optimizer.zero_grad()
 			output = model(inp)
+			print(output.shape, target.shape)
 			loss = criterion(output,target)
 			loss.backward()
 			optimizer.step()
