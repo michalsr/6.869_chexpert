@@ -52,8 +52,10 @@ def train(**kwargs):
 			mode = 'train')
 	val_dataloader = DataLoader(val_data, opt.batch_size,
 			shuffle = False)
-	criterion = torch.nn.BCELoss(reduction='mean')
-	
+	#criterion = torch.nn.BCELoss(reduction='mean')
+	loss1 = torch.nn.MSELoss(size_average = True)
+    loss2 = torch.nn.BCELoss(size_average = True)
+
 	optimizer = torch.optim.Adam(model.parameters(), betas=opt.betas,
 			lr=opt.lr, eps=opt.eps)
 	loss_mean_min = 1e100
@@ -68,22 +70,36 @@ def train(**kwargs):
 		for i, (data,label) in bar:
 			torch.set_grad_enabled(True)
 			data = data.mean(1).reshape(16, 1, 224, 224)
-			inp = data.clone().detach().requires_grad_(True)
-			target = label.clone().detach()
-			inp = inp.cuda()
-			#print("INPPPPP", inp.shape)
-			target = target.cuda()
+
+			varInput = data.clone().detach().requires_grad_(True).cuda()
+			varTarget1 = data.to(device)
+			varTarget2 = label.clone().detach().requires_grad_(True).cuda()
+
+			# varInput dim: bsx1x896x896
+			varOutput1, varOutput2 = model(varInput)
+			lossvalue1 = loss1(varOutput1, varTarget1)
+			lossvalue2 = loss2(varOutput2, varTarget2)
+			loss = 0.1*lossvalue1 + 0.9*lossvalue2
+
+			# inp = data.clone().detach().requires_grad_(True)
+			# target = label.clone().detach()
+			
+			# inp = inp.cuda()
+			# target = target.cuda()
+
 			optimizer.zero_grad()
-			output = model(inp)
-			loss = criterion(output[1],target)
+			# output = model(inp)
+
+			# loss = criterion(output[1], target)
+
 			loss.backward()
 			optimizer.step()
 			bar.set_postfix_str('loss: %.5s' % loss.item())
-		loss_mean = val(model,val_dataloader, criterion,total_batch)
+		loss_mean = val(model,val_dataloader,total_batch)
 		time_end=time.strftime('%m%d_%H%M%S')
 		if loss_mean_min > loss_mean:
 			loss_mean_min = loss_mean
-			save_dir = 'baseline'
+			save_dir = 'aecnn0'
 			if not os.path.exists(save_dir):
 				os.mkdir(save_dir)
 			PATH=save_dir+"/weights"+str(epoch)
@@ -93,19 +109,35 @@ def train(**kwargs):
 		else:
 			print('Epoch [' + str(epoch+1) + '] [-----] [m_' +
 				time_end + '] loss =' + str(loss_mean))
-def val(model,dataloader, criterion, total_batch):
+def val(model,dataloader, total_batch):
 	model.eval()
 	counter = 0
 	loss_sum = 0
+	loss1 = torch.nn.MSELoss(size_average = True)
+    loss2 = torch.nn.BCELoss(size_average = True)
+
 	with torch.no_grad():
 		bar = tqdm(enumerate(dataloader),total=total_batch)
 		for i , (data,label) in bar:
-			inp=data.clone().detach()
-			target=label.clone().detach()
-			inp = inp.cuda()
-			target =target.cuda()
-			output = model(inp)
-			loss = criterion(output,target)
+			# inp=data.clone().detach()
+			# target=label.clone().detach()
+			# inp = inp.cuda()
+			# target =target.cuda()
+			# output = model(inp)
+			# loss = criterion(output,target)
+
+			data = data.mean(1).reshape(16, 1, 224, 224)
+
+			varInput = data.clone().detach().requires_grad_(True).cuda()
+			varTarget1 = data.to(device)
+			varTarget2 = label.clone().detach().requires_grad_(True).cuda()
+
+			# varInput dim: bsx1x896x896
+			varOutput1, varOutput2 = model(varInput)
+			lossvalue1 = loss1(varOutput1, varTarget1)
+			lossvalue2 = loss2(varOutput2, varTarget2)
+			loss = 0.1*lossvalue1 + 0.9*lossvalue2
+
 			loss_sum += loss.item()
 			counter +=1
 			bar.set_postfix_str('loss: %.5s' % loss.item())
