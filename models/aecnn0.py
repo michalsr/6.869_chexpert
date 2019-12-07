@@ -49,5 +49,5 @@ class AECNN0(nn.Module):
 
         z2 = self.classifier(y2)
 
-        return y
+        return z1, z2
 
