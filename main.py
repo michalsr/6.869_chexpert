@@ -11,6 +11,7 @@ from tqdm  import tqdm
 import time
 from data.dataset import ChestDataSet
 from models.densenet import densenet121
+from models.aecnn0 import AECNN0
 from config import opt
 from data import preprocess
 from sklearn.metrics import roc_auc_score
@@ -52,6 +53,7 @@ def train(**kwargs):
 	val_dataloader = DataLoader(val_data, opt.batch_size,
 			shuffle = False)
 	criterion = torch.nn.BCELoss(reduction='mean')
+	
 	optimizer = torch.optim.Adam(model.parameters(), betas=opt.betas,
 			lr=opt.lr, eps=opt.eps)
 	loss_mean_min = 1e100
@@ -136,7 +138,7 @@ def write_csv(results,file_name):
 
 
 def generate_model():
-	model = densenet121(len(opt.classes))
+	model = AECNN0(len(opt.classes))
 	model.cuda()
 	if opt.load_model_path:
 
