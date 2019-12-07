@@ -72,7 +72,7 @@ def train(**kwargs):
 			data = data.mean(1).reshape(16, 1, 224, 224)
 
 			varInput = data.clone().detach().requires_grad_(True).cuda()
-			varTarget1 = data.to(device)
+			varTarget1 = data.cuda()
 			varTarget2 = label.clone().detach().requires_grad_(True).cuda()
 
 			# varInput dim: bsx1x896x896
@@ -130,7 +130,7 @@ def val(model,dataloader, total_batch):
 			data = data.mean(1).reshape(16, 1, 224, 224)
 
 			varInput = data.clone().detach().requires_grad_(True).cuda()
-			varTarget1 = data.to(device)
+			varTarget1 = data.cuda()
 			varTarget2 = label.clone().detach().requires_grad_(True).cuda()
 
 			# varInput dim: bsx1x896x896
