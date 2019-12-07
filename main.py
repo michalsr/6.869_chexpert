@@ -67,7 +67,7 @@ def train(**kwargs):
 		bar = tqdm(enumerate(train_dataloader),total=total_batch)
 		for i, (data,label) in bar:
 			torch.set_grad_enabled(True)
-			data = data[:,0,:,:]
+			data = data[:,0,:,:].reshape(16, 1, 224, 224)
 			inp = data.clone().detach().requires_grad_(True)
 			target = label.clone().detach()
 			inp = inp.cuda()
