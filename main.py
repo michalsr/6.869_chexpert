@@ -54,7 +54,7 @@ def train(**kwargs):
 			shuffle = False)
 	#criterion = torch.nn.BCELoss(reduction='mean')
 	loss1 = torch.nn.MSELoss(size_average = True)
-    loss2 = torch.nn.BCELoss(size_average = True)
+	loss2 = torch.nn.BCELoss(size_average = True)
 
 	optimizer = torch.optim.Adam(model.parameters(), betas=opt.betas,
 			lr=opt.lr, eps=opt.eps)
@@ -113,8 +113,9 @@ def val(model,dataloader, total_batch):
 	model.eval()
 	counter = 0
 	loss_sum = 0
+
 	loss1 = torch.nn.MSELoss(size_average = True)
-    loss2 = torch.nn.BCELoss(size_average = True)
+	loss2 = torch.nn.BCELoss(size_average = True)
 
 	with torch.no_grad():
 		bar = tqdm(enumerate(dataloader),total=total_batch)
