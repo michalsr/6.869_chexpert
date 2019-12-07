@@ -51,3 +51,21 @@ class AECNN0(nn.Module):
 
         return z1, z2
 
+class Relu1(Function):
+
+    @staticmethod
+    def forward(ctx, input):
+
+        ctx.save_for_backward(input)
+        #print("fwd:", input[0])
+        return input.clamp(min=0, max=1)
+
+    @staticmethod
+    def backward(ctx, grad_output):
+
+        input, = ctx.saved_tensors
+        grad_input = grad_output.clone()
+        grad_input[input<0]*=0.0
+        grad_input[input>1]*=0.0
+
+        return grad_input
