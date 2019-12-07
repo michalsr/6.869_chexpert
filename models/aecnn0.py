@@ -37,17 +37,20 @@ class AECNN0(nn.Module):
         y = self.encoder(x)
         y = Relu1.apply(y)
         
+        print("encoder out", y.shape)
+
         z1 = self.decoder(y)
         z1 = Relu1.apply(z1)
         
-        # bs, c, h, w = y.shape
-        # y2 = torch.Tensor(bs, c, h, w).cuda()
+        bs, c, h, w = y.shape
+        y2 = torch.Tensor(bs, c, h, w).cuda()
         
-        # for img_no in range(bs):
-        #     y2[img_no] = y[img_no]
-        #     y2[img_no] = self.normalize(y2[img_no]) #broadcasting 1 channel to 3 channels
+        for img_no in range(bs):
+            y2[img_no] = y[img_no]
+            y2[img_no] = self.normalize(y2[img_no]) #broadcasting 1 channel to 3 channels
 
-        z2 = self.classifier(y)
+        z2 = self.classifier(y2)
+        print(z1.shape, z2.shape)
 
         return z1, z2
 
