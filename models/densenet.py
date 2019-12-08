@@ -13,5 +13,5 @@ def densenet121(num_classes, pretrained=False, **kwargs):
 		nn.Sigmoid()
 	)
 
-	return model.load_state_dict(torch.load('./wBaseline/weights2'))
+	return model.load_state_dict(torch.load('/wBaseline/weights2'))
 
