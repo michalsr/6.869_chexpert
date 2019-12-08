@@ -69,14 +69,13 @@ def train(**kwargs):
 		bar = tqdm(enumerate(train_dataloader),total=total_batch)
 		for i, (data,label) in bar:
 			torch.set_grad_enabled(True)
-			print("it: ", i, data.shape)
-			data = data.mean(1).reshape(16, 1, 224, 224)
-
+			bt, c, w, h = data.shape
+			data = data.mean(1).reshape(bt, 1, w, h)
+			
 			varInput = data.clone().detach().requires_grad_(True).cuda()
 			varTarget1 = data.cuda()
 			varTarget2 = label.clone().detach().cuda()
 
-			# varInput dim: bsx1x896x896
 			varOutput1, varOutput2 = model(varInput)
 			lossvalue1 = loss1(varOutput1, varTarget1)
 			lossvalue2 = loss2(varOutput2, varTarget2)
