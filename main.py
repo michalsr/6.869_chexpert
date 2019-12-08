@@ -127,7 +127,8 @@ def val(model,dataloader, total_batch):
 			# output = model(inp)
 			# loss = criterion(output,target)
 
-			data = data.mean(1).reshape(16, 1, 224, 224)
+			bt, c, w, h = data.shape
+			data = data.mean(1).reshape(bt, 1, w, h)
 
 			varInput = data.clone().detach().requires_grad_(True).cuda()
 			varTarget1 = data.cuda()
