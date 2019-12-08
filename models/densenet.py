@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torchvision
 import torch
-
+import os
 
 def densenet121(num_classes, pretrained=False, **kwargs):
 	model = torchvision.models.densenet121(pretrained=pretrained,**kwargs)
@@ -13,5 +13,7 @@ def densenet121(num_classes, pretrained=False, **kwargs):
 		nn.Sigmoid()
 	)
 
-	return model.load_state_dict(torch.load('/wBaseline/weights2'))
+	path = os.getcwd() + '/wBaseline/weights2'
+
+	return model.load_state_dict(torch.load(path))
 
