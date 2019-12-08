@@ -1,5 +1,7 @@
 import torch.nn as nn
 import torchvision
+import torch
+
 
 def densenet121(num_classes, pretrained=False, **kwargs):
 	model = torchvision.models.densenet121(pretrained=pretrained,**kwargs)
@@ -10,5 +12,6 @@ def densenet121(num_classes, pretrained=False, **kwargs):
 		nn.Linear(num_features, num_classes),
 		nn.Sigmoid()
 	)
-	return model
+
+	return model.load_state_dict(torch.load('./wBaseline/weights2'))
 
