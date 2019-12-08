@@ -4,6 +4,7 @@ import torchvision
 import torchvision.transforms as transforms
 from .densenet import densenet121
 from torch.autograd import Function
+import os 
 
 class AECNN0(nn.Module):
 
@@ -33,6 +34,8 @@ class AECNN0(nn.Module):
 
         #CLASSIFIER
         self.classifier = densenet121(self.classCount)
+        path = os.getcwd() + '/models/wBaseline/weights2'
+        self.classifier.load_state_dict(torch.load(path))
 
     def forward(self, x):
         

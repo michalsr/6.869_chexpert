@@ -13,7 +13,5 @@ def densenet121(num_classes, pretrained=False, **kwargs):
 		nn.Sigmoid()
 	)
 
-	path = os.getcwd() + '/models/wBaseline/weights2'
-
-	return model.load_state_dict(torch.load(path))
+	return model
 
