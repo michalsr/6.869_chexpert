@@ -30,6 +30,8 @@ def test(**kwargs):
 	with torch.no_grad():
 		bar=tqdm(enumerate(test_dataloader),total=total_batch)
 		for i, (data,label) in bar:
+			bt, c, w, h = data.shape
+			data = data.mean(1).reshape(bt, 1, w, h)
 			inp = data.clone().detach()
 			target = label.clone().detach()
 			inp = inp.cuda()
@@ -37,7 +39,7 @@ def test(**kwargs):
 			output = model(inp)
 			gt = torch.cat((gt,target),0)
 			#print(gt)
-			pred = torch.cat((pred,output.data),0)
+			pred = torch.cat((pred, output[1].data),0)
 	AUROCs= compute_AUCs(gt,pred)
 	AUROC_avg = np.array(AUROCs).mean()
 	print('The average AUROC is {AUROC_avg:.3f}'.format(AUROC_avg=AUROC_avg))
