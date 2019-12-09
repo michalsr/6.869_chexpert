@@ -19,11 +19,12 @@ def val_test_set():
     validSet.to_csv('./data/validSet.csv', header=False, index=False, sep=' ')
     testSet.to_csv('./data/testSet.csv', header=False, index=False, sep=' ')
 def load_dataset(dataset_name):
-	dataset = pd.read_csv(dataset_name)
-	class_names = opt.classes
-	columns = ['Path'] + class_names
-	dataset = dataset[columns].fillna(0)
-	dataset= dataset.replace(-1,1)
-	return dataset
+        dataset = pd.read_csv(dataset_name)
+        class_names = opt.classes
+        columns = ['Path'] + class_names
+        #dataset = dataset.dropna()
+        dataset = dataset[columns].fillna(0)
+        dataset= dataset.replace(-1,1)
+        return dataset
 if __name__ == '__main__':
 	preprocess()
