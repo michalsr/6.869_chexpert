@@ -6,11 +6,11 @@ class DefaultConfig(object):
 	valid_data_list = './data/validSet.csv'
 	test_data_list = './data/testSet.csv'
 	classes= ['Cardiomegaly','Atelectasis','Pleural Effusion','Consolidation','Edema']
-	batch_size =16
+	batch_size = 32
 	check_freq = 2000
 	result_file = 'result.csv'
 	max_epoch = 10
-	lr = .0002
+	lr = .0001
 	betas = (.9,.999)
 	eps= 1e-08
 	lr_decay = .95
