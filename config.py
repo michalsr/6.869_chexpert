@@ -10,7 +10,7 @@ class DefaultConfig(object):
 	check_freq = 2000
 	result_file = 'result.csv'
 	max_epoch = 5
-	lr = .0001
+	lr = .0002
 	betas = (.9,.999)
 	eps= 1e-08
 	lr_decay = .95
