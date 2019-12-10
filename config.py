@@ -1,12 +1,12 @@
 class DefaultConfig(object):
 	model = 'densenet'
-	load_model_path =  './aecnn0_bs_10epochs/weights2'
+	load_model_path =  ''
 	data_root = '..'
 	train_data_list = './data/trainSet.csv'
 	valid_data_list = './data/validSet.csv'
 	test_data_list = './data/testSet.csv'
 	classes= ['Cardiomegaly','Atelectasis','Pleural Effusion','Consolidation','Edema']
-	batch_size = 32
+	batch_size = 64
 	check_freq = 2000
 	result_file = 'result.csv'
 	max_epoch = 10
