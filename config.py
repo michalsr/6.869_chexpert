@@ -1,6 +1,6 @@
 class DefaultConfig(object):
 	model = 'densenet'
-	load_model_path =  ''
+	load_model_path =  'aecnn0_bt_64/weights6'
 	data_root = '..'
 	train_data_list = './data/trainSet.csv'
 	valid_data_list = './data/validSet.csv'
